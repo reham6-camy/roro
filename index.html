@@ -1,85 +1,104 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-<link rel="stylesheet" href="css.css">
+  <meta charset="UTF-8">
+  <title>Scientific Calculator</title>
+  <link rel="stylesheet" href="stayle.css">
 </head>
 <body>
-    
-
-    <div class="calculator">
-    <input type="text" class="display" id="display" disabled>
-
-<div class="buttons">
-
-<button onclick="append('7')">7</button>
-<button onclick="append('8')">8</button>
-
-<button onclick="append('9')">9</button>
-<button class="operator" onclick="append ('/')">÷</button>
-
-
-<button onclick="append('4')">4</button>
-<button onclick="append('5')">5</button>
-<button onclick="append('6')">6</button>
-<button class="operator" onclick="append ('*')">×</button>
-
-
-<button onclick="append('1')">1</button>
-<button onclick="append('2')">2</button>
-<button onclick="append('3')">3</button>
-<button class="operator" onclick="append ('-')">-</button>
-
-
-
-<button onclick="append('0')">0</button>
-<button onclick="append('.')">.</button>
-
-<button class="operator" onclick="append ('+')">+</button>
-
-
-      <button class="clear" onclick="clearDisplay()">C</button>
-      <button class="equal" onclick="calculate()">=</button>
-
-</div>
+    <div class="reham"></div>
+  <div class="calculator">
+    <!-- شاشة العرض -->
+    <div class="display">
+      <span id="expression"></span>
+      <span id="answer"></span>
     </div>
 
+    <!-- الأزرار -->
+    <div class="buttons">
+      <button onclick="clearScreen()">AC</button>
+      <button onclick="backspace()">⌫</button>
+      <button onclick="insert('(')">(</button>
+      <button onclick="insert(')')">)</button>
+
+      <button onclick="insert('sin(')">sin</button>
+      <button onclick="insert('cos(')">cos</button>
+      <button onclick="insert('tan(')">tan</button>
+      <button onclick="insert('log(')">log</button>
+
+      <button onclick="insert('sqrt(')">√</button>
+      <button onclick="insert('pi')">π</button>
+      <button onclick="insert('e')">e</button>
+      <button onclick="insert('^')">xʸ</button>
+
+      <button onclick="insert('7')">7</button>
+      <button onclick="insert('8')">8</button>
+      <button onclick="insert('9')">9</button>
+      <button onclick="insert('/')">÷</button>
+
+      <button onclick="insert('4')">4</button>
+      <button onclick="insert('5')">5</button>
+      <button onclick="insert('6')">6</button>
+      <button onclick="insert('*')">×</button>
+
+      <button onclick="insert('1')">1</button>
+      <button onclick="insert('2')">2</button>
+      <button onclick="insert('3')">3</button>
+      <button onclick="insert('-')">−</button>
+
+      <button onclick="insert('0')">0</button>
+      <button onclick="insert('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="insert('+')">+</button>
+    </div>
+  </div>
+</div>
 
 
 
 
 
-  <script>
-    let display = document.getElementById('display');
-    let resultShown = false; // فلاغ عشان نعرف إذا النتيجة ظهرت
+<script>
 
-    function append(value) {
-      if (resultShown) {
-        // لو لسه مخلصين عملية، نمسح الشاشة أول ما المستخدم يكتب رقم جديد
-        display.value = '';
-        resultShown = false;
-      }
-      display.value += value;
-    }
+function insert(value) {
+  document.getElementById("expression").innerText += value;
+}
 
-    function clearDisplay() {
-      display.value = '';
-    }
+function clearScreen() {
+  document.getElementById("expression").innerText = "";
+  document.getElementById("answer").innerText = "";
+}
 
-    function calculate() {
-      try {
-        display.value = eval(display.value);
-        resultShown = true; // النتيجة ظهرت
-      } catch {
-        display.value = 'خطأ';
-        resultShown = true;
-      }
-    }
-  </script>
+function backspace() {
+  let exp = document.getElementById("expression").innerText;
+  document.getElementById("expression").innerText = exp.slice(0, -1);
+}
+
+function calculate() {
+  let exp = document.getElementById("expression").innerText;
+
+  // استبدال الرموز
+  exp = exp.replace(/pi/g, Math.PI);
+  exp = exp.replace(/e/g, Math.E);
+  exp = exp.replace(/sqrt/g, "Math.sqrt");
+  exp = exp.replace(/sin/g, "Math.sin");
+  exp = exp.replace(/cos/g, "Math.cos");
+  exp = exp.replace(/tan/g, "Math.tan");
+  exp = exp.replace(/log/g, "Math.log10");
+  exp = exp.replace(/\^/g, "");
+
+  try {
+    let result = eval(exp);
+    document.getElementById("answer").innerText = "= " + result;
+  } catch {
+    document.getElementById("answer").innerText = "Error";
+  }
+}
+
+
+</script>
+
 </body>
 </html>
-
-
-
