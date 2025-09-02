@@ -1,22 +1,19 @@
-
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
   <title>Scientific Calculator</title>
-  <link rel="stylesheet" href="stayle.css">
+  <link rel="stylesheet" href="css.css">
 </head>
 <body>
-    <div class="reham"></div>
+    
   <div class="calculator">
-    <!-- شاشة العرض -->
+    
     <div class="display">
       <span id="expression"></span>
       <span id="answer"></span>
     </div>
 
-    <!-- الأزرار -->
     <div class="buttons">
       <button onclick="clearScreen()">AC</button>
       <button onclick="backspace()">⌫</button>
@@ -54,13 +51,10 @@
       <button onclick="insert('+')">+</button>
     </div>
   </div>
-</div>
+
+  <script>
 
 
-
-
-
-<script>
 
 function insert(value) {
   document.getElementById("expression").innerText += value;
@@ -79,26 +73,40 @@ function backspace() {
 function calculate() {
   let exp = document.getElementById("expression").innerText;
 
-  // استبدال الرموز
-  exp = exp.replace(/pi/g, Math.PI);
-  exp = exp.replace(/e/g, Math.E);
+  // استبدال الثوابت والدوال
+  exp = exp.replace(/pi/g, "Math.PI");
+  exp = exp.replace(/e/g, "Math.E");
   exp = exp.replace(/sqrt/g, "Math.sqrt");
   exp = exp.replace(/sin/g, "Math.sin");
   exp = exp.replace(/cos/g, "Math.cos");
   exp = exp.replace(/tan/g, "Math.tan");
   exp = exp.replace(/log/g, "Math.log10");
-  exp = exp.replace(/\^/g, "");
+
+  // ✅ استبدال ^ بـ Math.pow (حتى لو فيه أقواس أو عمليات)
+  while (exp.includes("^")) {
+    exp = exp.replace(/([\d.()]+)\^([\d.()]+)/, "Math.pow($1,$2)");
+  }
 
   try {
     let result = eval(exp);
-    document.getElementById("answer").innerText = "= " + result;
+
+    // ✅ لو الناتج مش رقم (NaN) أو مالا نهاية
+    if (!isFinite(result)) {
+      document.getElementById("answer").innerText = "Error";
+    } else {
+      document.getElementById("answer").innerText = "= " + result;
+    }
   } catch {
     document.getElementById("answer").innerText = "Error";
   }
 }
 
 
-</script>
 
+
+
+
+
+  </script>
 </body>
 </html>

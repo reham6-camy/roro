@@ -1,14 +1,12 @@
-
 body {
   display: flex;
-  justify-content: center;  /* يخليها في نص الصفحة بالعرض */
-  align-items: center;      /* يخليها في نص الصفحة بالطول */
-  height: 100vh;            /* ياخد طول الشاشة كله */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background: #222;
   font-family: Arial, sans-serif;
-  margin: 0; /* نشيل المسافات الافتراضية */
+  margin: 0;
 }
-
 
 .calculator {
   background: #333;
@@ -26,10 +24,11 @@ body {
   padding: 10px;
   font-size: 22px;
   display: flex;
-  justify-content: space-between; /* العملية شمال والنتيجة يمين */
+  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   margin-bottom: 15px;
+  overflow-x: auto;  /* ✅ لو المعادلة طويلة */
 }
 
 #expression {
@@ -42,9 +41,8 @@ body {
 
 .buttons {
   display: grid;
-  grid-template-columns: repeat(4, 70px);
+  grid-template-columns: repeat(4, 1fr);  /* ✅ مرن */
   gap: 10px;
-  justify-content: center;
 }
 
 button {
@@ -64,19 +62,3 @@ button:hover {
 button:active {
   background: #999;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
